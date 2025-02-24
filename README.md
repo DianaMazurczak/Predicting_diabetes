@@ -82,19 +82,19 @@ class NeuralNetwork1layer(nn.Module):
         return self.linear_relu_stack(x)
 ```
 
-| Learning rate | Mean (train) | Std (train) | Mean (test) | Std (test) |
-|---------------|--------------|-------------|-------------|------------|
-| 0.0001        | 83.23        | 0.27        | 83.29         | 0.56     |
-| 0.001         | 83.66        | 0.20        | 83.50         | 0.36     |
-| 0.01          | 83.71        | 0.09        | 84.68         | 0.67     |
-| 0.1           | 81.92        | 0.71        | 84.49         | 2.27     |
+| Learning Rate | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|--------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| 1e-04       | 83.29        | 0.56                       | 0.38          | 0.03                        | 0.33       | 0.03                     |
+| 0.001       | 83.50        | 0.36                       | 0.41          | 0.00                        | 0.41       | 0.04                     |
+| 0.01        | 84.68        | 0.67                       | 0.44          | 0.02                        | 0.36       | 0.06                     |
+| 0.1         | 84.49        | 2.27                       | 0.47          | 0.09                        | 0.23       | 0.22                     |
 
-| Batch | Mean (train) | Std (train) | Mean (test) | Std (test) |
-|-------|--------------|-------------|-------------|------------|
-| 32    | 82.98             | 1.31                 | 83.94         | 0.75              |
-| 64    | 83.11             | 0.97                 | 83.55         | 1.80              |
-| 128   | 83.24             | 0.64                 | 84.21         | 1.32              |
-| 256   | 83.19             | 0.54                 | 84.27         | 1.43              |
+| Batch Size | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| 32         | 83.94        | 0.75                       | 0.41          | 0.02                        | 0.35       | 0.07                     |
+| 64         | 83.55        | 1.80                       | 0.41          | 0.04                        | 0.39       | 0.11                     |
+| 128        | 84.21        | 1.32                       | 0.45          | 0.09                        | 0.30       | 0.20                     |
+| 256        | 84.27        | 1.43                       | 0.42          | 0.06                        | 0.29       | 0.11                     |
 
 The greater the amount of data in the sample, the better the results, but the variances are also high, meaning that results can be weaker than the average.
 
@@ -117,26 +117,26 @@ class NeuralNetwork2layers(nn.Module):
         return self.linear_relu_stack(x)
 ```
 
-| Learning rate | Mean (train) | Std (train) | Mean (test) | Std (test) |
-|---------------|--------------|-------------|-------------|------------|
-| 0.0001                  | 83.64             | 0.23                 | 83.62         | 0.54              |
-| 0.001                   | 83.77             | 0.13                 | 83.45         | 1.23              |
-| 0.01                    | 83.46             | 0.53                 | 84.18         | 1.51              |
-| 0.1                     | 81.99             | 2.20                 | 82.75         | 5.36              |
+| Learning Rate | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|--------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| 1e-04       | 83.62        | 0.54                       | 0.42          | 0.01                        | 0.44       | 0.04                     |
+| 0.001       | 83.45        | 1.23                       | 0.42          | 0.02                        | 0.49       | 0.06                     |
+| 0.01        | 84.18        | 1.51                       | 0.44          | 0.04                        | 0.41       | 0.11                     |
+| 0.1         | 82.75        | 5.36                       | 0.13          | 0.17                        | 0.24       | 0.32                     |
 
-| Activation |  Mean (train) | Std (train) | Mean (test) | Std (test) |
-|-------------------|-------------------|----------------------|---------------|-------------------|
-| ReLU             | 83.63             | 1.48                 | 82.84         | 3.87              |
-| Sigmoid          | 82.75             | 1.43                 | 83.23         | 3.59              |
-| Softplus         | 83.22             | 1.31                 | 84.25         | 1.45              |
-| Tanh             | 83.27             | 1.02                 | 83.67         | 1.67              |
+| Activation Function | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|--------------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| ReLU             | 82.84        | 3.87                       | 0.36          | 0.15                        | 0.41       | 0.21                     |
+| Sigmoid         | 83.23        | 3.59                       | 0.34          | 0.17                        | 0.40       | 0.22                     |
+| Softplus        | 84.25        | 1.45                       | 0.38          | 0.15                        | 0.39       | 0.17                     |
+| Tanh            | 83.67        | 1.67                       | 0.33          | 0.17                        | 0.38       | 0.20                     |
 
-| Batch | Mean (train) | Std (train) | Mean (test) | Std (test) |
-|-------|--------------|-------------|-------------|------------|
-| 32    | 83.49             | 1.26                 | 84.46         | 1.55              |
-| 64    | 83.04             | 1.38                 | 84.09         | 1.62              |
-| 128   | 83.13             | 1.44                 | 82.00         | 4.75              |
-| 256   | 83.22             | 1.32                 | 83.44         | 1.62              |
+| Batch Size | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| 32         | 84.46        | 1.55                       | 0.33          | 0.20                        | 0.32       | 0.21                     |
+| 64         | 84.09        | 1.62                       | 0.34          | 0.17                        | 0.37       | 0.19                     |
+| 128        | 82.00        | 4.75                       | 0.38          | 0.12                        | 0.47       | 0.19                     |
+| 256        | 83.44        | 1.62                       | 0.36          | 0.14                        | 0.41       | 0.17                     |
 
 Looking already at the exact statistics, the network achieves the best results with a learning rate of 0.01, a softplus activation function and a batch size of 32. With a small learning rate, the results are similar regardless of the other parameters, while for a rate of 0.1, the other parameters already have a strong influence on the results.
 
@@ -160,26 +160,26 @@ class NeuralNetwork3layers(nn.Module):
         return self.linear_relu_stack(x)
 ```
 
-| Learning rate | Mean (train) | Std (train) | Mean (test) | Std (test) |
-|---------------|--------------|-------------|-------------|------------|
-| 0.0001                  | 83.53             | 0.28                 | 83.39         | 0.91              |
-| 0.001                   | 83.75             | 0.17                 | 83.64         | 0.88              |
-| 0.01                    | 83.30             | 0.69                 | 83.94         | 1.81              |
-| 0.1                     | 84.40             | 1.95                 | 84.48         | 3.60              |
+| Learning Rate | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|--------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| 1e-04       | 83.39        | 0.91                       | 0.42          | 0.02                        | 0.47       | 0.04                     |
+| 0.001       | 83.64        | 0.88                       | 0.43          | 0.02                        | 0.48       | 0.05                     |
+| 0.01        | 83.94        | 1.81                       | 0.40          | 0.11                        | 0.39       | 0.18                     |
+| 0.1         | 84.48        | 3.60                       | 0.07          | 0.14                        | 0.12       | 0.27                     |
 
-| Activation |  Mean (train) | Std (train) | Mean (test) | Std (test) |
-|-------------------|-------------------|----------------------|---------------|-------------------|
-| ReLU             | 83.67             | 1.23                 | 83.11         | 2.72              |
-| Sigmoid          | 83.70             | 1.01                 | 84.14         | 1.54              |
-| Softplus         | 84.06             | 1.12                 | 84.32         | 2.07              |
-| Tanh             | 83.55             | 1.07                 | 83.87         | 1.90              |
+| Activation Function | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|--------------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| ReLU             | 83.11        | 2.72                       | 0.36          | 0.15                        | 0.42       | 0.19                     |
+| Sigmoid         | 84.14        | 1.54                       | 0.32          | 0.19                        | 0.36       | 0.22                     |
+| Softplus        | 84.32        | 2.07                       | 0.35          | 0.18                        | 0.36       | 0.20                     |
+| Tanh            | 83.87        | 1.90                       | 0.27          | 0.19                        | 0.33       | 0.26                     |
 
-| Batch | Mean (train) | Std (train) | Mean (test) | Std (test) |
-|-------|--------------|-------------|-------------|------------|
-| 32    | 83.99             | 1.18                 | 84.40         | 1.86              |
-| 64    | 83.83             | 1.06                 | 84.53         | 1.25              |
-| 128   | 83.54             | 1.12                 | 83.34         | 2.72              |
-| 256   | 83.61             | 1.09                 | 83.17         | 2.14              |
+| Batch Size | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| 32         | 84.40        | 1.86                       | 0.30          | 0.21                        | 0.31       | 0.23                     |
+| 64         | 84.53        | 1.25                       | 0.32          | 0.19                        | 0.32       | 0.22                     |
+| 128        | 83.34        | 2.72                       | 0.33          | 0.17                        | 0.40       | 0.21                     |
+| 256        | 83.17        | 2.14                       | 0.36          | 0.14                        | 0.43       | 0.19                     |
 
 As before, networks with a learning rate of 0.1 have a high deviation for the test data and, of all the activation functions, the ReLU function performs worst for the test set.
 
@@ -204,26 +204,27 @@ class NeuralNetwork4layers(nn.Module):
         return self.linear_relu_stack(x)
 ```
 
-| Learning rate | Mean (train) | Std (train) | Mean (test) | Std (test) |
-|---------------|--------------|-------------|-------------|------------|
-| 0.0001                  | 83.54             | 0.31                 | 83.28         | 1.15              |
-| 0.001                   | 83.75             | 0.17                 | 83.20         | 1.49              |
-| 0.01                    | 83.58             | 0.80                 | 84.19         | 1.61              |
-| 0.1                     | 80.84             | 17.91                | 81.41         | 18.00             |
+| Learning Rate | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|--------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| 1e-04       | 83.28        | 1.15                       | 0.42          | 0.02                        | 0.48       | 0.06                     |
+| 0.001       | 83.20        | 1.49                       | 0.42          | 0.02                        | 0.50       | 0.06                     |
+| 0.01        | 84.19        | 1.61                       | 0.37          | 0.15                        | 0.36       | 0.20                     |
+| 0.1         | 81.41        | 18.00                      | 0.03          | 0.11                        | 0.09       | 0.27                     |
 
-| Activation |  Mean (train) | Std (train) | Mean (test) | Std (test) |
-|-------------------|-------------------|----------------------|---------------|-------------------|
-| ReLU             | 79.47             | 17.51                | 79.95         | 17.64             |
-| Sigmoid          | 84.05             | 1.21                 | 84.02         | 1.37              |
-| Softplus         | 84.39             | 1.02                 | 84.14         | 1.54              |
-| Tanh             | 83.81             | 1.14                 | 83.97         | 2.37              |
+| Activation Function | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|--------------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| ReLU             | 79.95        | 17.64                      | 0.36          | 0.16                        | 0.42       | 0.23                     |
+| Sigmoid         | 84.02        | 1.37                       | 0.31          | 0.19                        | 0.36       | 0.22                     |
+| Softplus        | 84.14        | 1.54                       | 0.32          | 0.19                        | 0.36       | 0.22                     |
+| Tanh            | 83.97        | 2.37                       | 0.25          | 0.20                        | 0.30       | 0.27                     |
 
-| Batch | Mean (train) | Std (train) | Mean (test) | Std (test) |
-|-------|--------------|-------------|-------------|------------|
-| 32    | 84.21             | 1.16                 | 84.62         | 1.46              |
-| 64    | 79.62             | 17.54                | 79.44         | 17.58             |
-| 128   | 83.77             | 1.31                 | 84.11         | 1.59              |
-| 256   | 84.11             | 1.19                 | 83.91         | 1.55              |
+| Batch Size | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
+|------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| 32         | 84.62        | 1.46                       | 0.30          | 0.21                        | 0.30       | 0.22                     |
+| 64         | 79.44        | 17.58                      | 0.29          | 0.19                        | 0.40       | 0.28                     |
+| 128        | 84.11        | 1.59                       | 0.34          | 0.17                        | 0.36       | 0.22                     |
+| 256        | 83.91        | 1.55                       | 0.31          | 0.19                        | 0.37       | 0.23                     |
+
 
 The example of a network with three layers shows even better the conclusions observed
 in the previous examples.
