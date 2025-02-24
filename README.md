@@ -57,14 +57,193 @@ After examining the boxplot, histograms and basic statistics, the following conc
 
 ## :small_blue_diamond: Neural networks
 
+Each network model was trained on different combinations of 3 parameters:
+- batch size: 32, 64, 128, 256;
+- learning rate: 0.1, 0.01, 0.001, 0.0001;
+- activation function: Sigmoid, ReLU, Tanh, Softplus.
+
+Pozostałe parametry zawsze były stałe:
+- number of epochs = 8
+- loss function = Binary Cross Entropy
+- optimization function = Adam()
+
 ### :small_blue_diamond: without hidden layers
+
+```python
+class NeuralNetwork1layer(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(21, 1),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        return self.linear_relu_stack(x)
+```
+
+| Learning rate | Mean (train) | Std (train) | Mean (test) | Std (test) |
+|---------------|--------------|-------------|-------------|------------|
+| 0.0001        | 83.23        | 0.27        | 83.29         | 0.56     |
+| 0.001         | 83.66        | 0.20        | 83.50         | 0.36     |
+| 0.01          | 83.71        | 0.09        | 84.68         | 0.67     |
+| 0.1           | 81.92        | 0.71        | 84.49         | 2.27     |
+
+| Batch | Mean (train) | Std (train) | Mean (test) | Std (test) |
+|-------|--------------|-------------|-------------|------------|
+| 32    | 82.98             | 1.31                 | 83.94         | 0.75              |
+| 64    | 83.11             | 0.97                 | 83.55         | 1.80              |
+| 128   | 83.24             | 0.64                 | 84.21         | 1.32              |
+| 256   | 83.19             | 0.54                 | 84.27         | 1.43              |
+
+The greater the amount of data in the sample, the better the results, but the variances are also high, meaning that results can be weaker than the average.
+
 
 ### :small_blue_diamond: with 1 hidden layer
 
+```python
+class NeuralNetwork2layers(nn.Module):
+    # dzięki parametrom można później ustalić ilość neuronów w warstwie oraz wybrać funkcję aktywacji
+    def __init__(self, features=16, activation=nn.ReLU()):
+        super().__init__()
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(21, features),
+            activation,
+            nn.Linear(features, 1),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        return self.linear_relu_stack(x)
+```
+
+| Learning rate | Mean (train) | Std (train) | Mean (test) | Std (test) |
+|---------------|--------------|-------------|-------------|------------|
+| 0.0001                  | 83.64             | 0.23                 | 83.62         | 0.54              |
+| 0.001                   | 83.77             | 0.13                 | 83.45         | 1.23              |
+| 0.01                    | 83.46             | 0.53                 | 84.18         | 1.51              |
+| 0.1                     | 81.99             | 2.20                 | 82.75         | 5.36              |
+
+| Activation |  Mean (train) | Std (train) | Mean (test) | Std (test) |
+|-------------------|-------------------|----------------------|---------------|-------------------|
+| ReLU             | 83.63             | 1.48                 | 82.84         | 3.87              |
+| Sigmoid          | 82.75             | 1.43                 | 83.23         | 3.59              |
+| Softplus         | 83.22             | 1.31                 | 84.25         | 1.45              |
+| Tanh             | 83.27             | 1.02                 | 83.67         | 1.67              |
+
+| Batch | Mean (train) | Std (train) | Mean (test) | Std (test) |
+|-------|--------------|-------------|-------------|------------|
+| 32    | 83.49             | 1.26                 | 84.46         | 1.55              |
+| 64    | 83.04             | 1.38                 | 84.09         | 1.62              |
+| 128   | 83.13             | 1.44                 | 82.00         | 4.75              |
+| 256   | 83.22             | 1.32                 | 83.44         | 1.62              |
+
+Looking already at the exact statistics, the network achieves the best results with a learning rate of 0.01, a softplus activation function and a batch size of 32. With a small learning rate, the results are similar regardless of the other parameters, while for a rate of 0.1, the other parameters already have a strong influence on the results.
+
+
 ### :small_blue_diamond: with 2 hidden layers
+
+```python
+class NeuralNetwork3layers(nn.Module):
+    def __init__(self, features1=16, features2=16, activation=nn.ReLU()):
+        super().__init__()
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(21, features1),
+            activation,
+            nn.Linear(features1, features2),
+            activation,
+            nn.Linear(features2, 1),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        return self.linear_relu_stack(x)
+```
+
+| Learning rate | Mean (train) | Std (train) | Mean (test) | Std (test) |
+|---------------|--------------|-------------|-------------|------------|
+| 0.0001                  | 83.53             | 0.28                 | 83.39         | 0.91              |
+| 0.001                   | 83.75             | 0.17                 | 83.64         | 0.88              |
+| 0.01                    | 83.30             | 0.69                 | 83.94         | 1.81              |
+| 0.1                     | 84.40             | 1.95                 | 84.48         | 3.60              |
+
+| Activation |  Mean (train) | Std (train) | Mean (test) | Std (test) |
+|-------------------|-------------------|----------------------|---------------|-------------------|
+| ReLU             | 83.67             | 1.23                 | 83.11         | 2.72              |
+| Sigmoid          | 83.70             | 1.01                 | 84.14         | 1.54              |
+| Softplus         | 84.06             | 1.12                 | 84.32         | 2.07              |
+| Tanh             | 83.55             | 1.07                 | 83.87         | 1.90              |
+
+| Batch | Mean (train) | Std (train) | Mean (test) | Std (test) |
+|-------|--------------|-------------|-------------|------------|
+| 32    | 83.99             | 1.18                 | 84.40         | 1.86              |
+| 64    | 83.83             | 1.06                 | 84.53         | 1.25              |
+| 128   | 83.54             | 1.12                 | 83.34         | 2.72              |
+| 256   | 83.61             | 1.09                 | 83.17         | 2.14              |
+
+As before, networks with a learning rate of 0.1 have a high deviation for the test data and, of all the activation functions, the ReLU function performs worst for the test set.
 
 ### :small_blue_diamond: with 3 hidden layers
 
+```python
+class NeuralNetwork4layers(nn.Module):
+    def __init__(self, features1=16, features2=16, features3=16, activation=nn.ReLU()):
+        super().__init__()
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(21, features1),
+            activation,
+            nn.Linear(features1, features2),
+            activation,
+            nn.Linear(features2, features3),
+            activation,
+            nn.Linear(features3, 1),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        return self.linear_relu_stack(x)
+```
+
+| Learning rate | Mean (train) | Std (train) | Mean (test) | Std (test) |
+|---------------|--------------|-------------|-------------|------------|
+| 0.0001                  | 83.54             | 0.31                 | 83.28         | 1.15              |
+| 0.001                   | 83.75             | 0.17                 | 83.20         | 1.49              |
+| 0.01                    | 83.58             | 0.80                 | 84.19         | 1.61              |
+| 0.1                     | 80.84             | 17.91                | 81.41         | 18.00             |
+
+| Activation |  Mean (train) | Std (train) | Mean (test) | Std (test) |
+|-------------------|-------------------|----------------------|---------------|-------------------|
+| ReLU             | 79.47             | 17.51                | 79.95         | 17.64             |
+| Sigmoid          | 84.05             | 1.21                 | 84.02         | 1.37              |
+| Softplus         | 84.39             | 1.02                 | 84.14         | 1.54              |
+| Tanh             | 83.81             | 1.14                 | 83.97         | 2.37              |
+
+| Batch | Mean (train) | Std (train) | Mean (test) | Std (test) |
+|-------|--------------|-------------|-------------|------------|
+| 32    | 84.21             | 1.16                 | 84.62         | 1.46              |
+| 64    | 79.62             | 17.54                | 79.44         | 17.58             |
+| 128   | 83.77             | 1.31                 | 84.11         | 1.59              |
+| 256   | 84.11             | 1.19                 | 83.91         | 1.55              |
+
+The example of a network with three layers shows even better the conclusions observed
+in the previous examples.
+
 ## :small_blue_diamond: Conclusions
+
+| Number of hidden layers               | 0  | 1  | 2  | 3  |
+|---------------------------------------|----|----|----|----|
+| **Mean accuracy (training)**       | 83 | 83 | 84 | 83 |
+| **Mean accuracy (test)**          | 84 | 84 | 84 | 83 |
+| **Mean precision (training)**         | 39 | 38 | 35 | 32 |
+| **Mean precision (test)**            | 42 | 35 | 32 | 31 |
+| **Mean recall (training)**          | 38 | 40 | 38 | 36 |
+| **Mean recall (test)**             | 33 | 39 | 37 | 36 |
+
+The number of layers does not have a large impact on the accuracy of the network, in each case the accuracy is around 83% - 84%.In the case of precision and sensitivity, better results are achieved by networks
+with fewer hidden layers.
+In summary, the learning rate and the activation function have the greatest influence on the results, but in most cases the accuracy is around 83% with precision
+and sensitivity varying between 30% and 40%.
+
+
 
 
