@@ -14,25 +14,6 @@ workbook = xlsxwriter.Workbook('Wyniki_sieci_neuronowe.xlsx')
 worksheet = workbook.add_worksheet()
 
 
-def data(id):
-
-    # fetch dataset
-    cdc_diabetes_health_indicators = fetch_ucirepo(id=id)
-
-    # data (as pandas dataframes)
-    X = cdc_diabetes_health_indicators.data.features
-    y = cdc_diabetes_health_indicators.data.targets
-    print(y)
-    print("-----------")
-    print(y.squeeze(1))
-
-    # metadata
-    # print(cdc_diabetes_health_indicators.metadata)
-
-    # variable information
-    # print(cdc_diabetes_health_indicators.variables)
-
-
 class CustomDataset(Dataset):
     def __init__(self, dataset, transform=None):
         self.data = dataset
