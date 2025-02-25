@@ -32,6 +32,12 @@ In this work, I want to build a neural network that can best predict whether a p
 
 Because there is many binary features I normalize the rest of the variables to have values between 0 and 1.
 
+<p align="center">
+    <img src="BMI.png" alt="BMI Plots" width="48%">
+    <img src="boxplots.png" alt="Boxplots" width="45%">
+    <img src="histograms.png" alt="Histograms" width="95%">
+</p>
+
 After examining the boxplot, histograms and basic statistics, the following conclusions can be drawn about the dataset:
 - most people rated their health as good or better
 - at least half rated their mental and physical health as good every day in the past 30 days
