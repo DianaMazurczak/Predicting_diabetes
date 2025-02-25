@@ -62,7 +62,7 @@ Each network model was trained on different combinations of 3 parameters:
 - learning rate: 0.1, 0.01, 0.001, 0.0001;
 - activation function: Sigmoid, ReLU, Tanh, Softplus.
 
-Pozostałe parametry zawsze były stałe:
+Other parameters have always been constant:
 - number of epochs = 8
 - loss function = Binary Cross Entropy
 - optimization function = Adam()
@@ -84,19 +84,24 @@ class NeuralNetwork1layer(nn.Module):
 
 | Learning Rate | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
 |--------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| 1e-04       | 83.29        | 0.56                       | 0.38          | 0.03                        | 0.33       | 0.03                     |
-| 0.001       | 83.50        | 0.36                       | 0.41          | 0.00                        | 0.41       | 0.04                     |
-| 0.01        | 84.68        | 0.67                       | 0.44          | 0.02                        | 0.36       | 0.06                     |
-| 0.1         | 84.49        | 2.27                       | 0.47          | 0.09                        | 0.23       | 0.22                     |
+| 0.0001       | 83.29        | 0.56                       | 38.33         | 2.65                        | 32.86      | 3.42                     |
+| 0.001       | 83.50        | 0.36                       | 40.87         | 0.39                        | 41.15      | 3.83                     |
+| 0.01        | 84.68        | 0.67                       | 44.20         | 2.05                        | 35.73      | 6.14                     |
+| 0.1         | 84.49        | 2.27                       | 46.81         | 9.46                        | 23.31      | 22.20                    |
 
 | Batch Size | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
 |------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| 32         | 83.94        | 0.75                       | 0.41          | 0.02                        | 0.35       | 0.07                     |
-| 64         | 83.55        | 1.80                       | 0.41          | 0.04                        | 0.39       | 0.11                     |
-| 128        | 84.21        | 1.32                       | 0.45          | 0.09                        | 0.30       | 0.20                     |
-| 256        | 84.27        | 1.43                       | 0.42          | 0.06                        | 0.29       | 0.11                     |
+| 32         | 83.94        | 0.75                       | 41.28         | 1.62                        | 35.37      | 7.23                     |
+| 64         | 83.55        | 1.80                       | 41.50         | 4.01                        | 38.72      | 11.18                    |
+| 128        | 84.21        | 1.32                       | 45.45         | 9.42                        | 30.29      | 19.87                    |
+| 256        | 84.27        | 1.43                       | 41.98         | 5.78                        | 28.67      | 11.09                    |
 
-The greater the amount of data in the sample, the better the results, but the variances are also high, meaning that results can be weaker than the average.
+- for small values of learning rate and batch size scores are similar, because they have small standard deviation,
+- precision and accurancy is better for bigger values of learning rate
+- recall have the best scores for the middle values of lerning rate (0.001 and 0.01)
+- similar accuracy is better for bigger batch size
+- precision is similar, but for batch size euqal 128 is the best
+- recall in the other hand is definitely more diverse and it is the best for the batch size euqal 64
 
 
 ### :small_blue_diamond: with 1 hidden layer
@@ -119,26 +124,31 @@ class NeuralNetwork2layers(nn.Module):
 
 | Learning Rate | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
 |--------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| 1e-04       | 83.62        | 0.54                       | 0.42          | 0.01                        | 0.44       | 0.04                     |
-| 0.001       | 83.45        | 1.23                       | 0.42          | 0.02                        | 0.49       | 0.06                     |
-| 0.01        | 84.18        | 1.51                       | 0.44          | 0.04                        | 0.41       | 0.11                     |
-| 0.1         | 82.75        | 5.36                       | 0.13          | 0.17                        | 0.24       | 0.32                     |
+| 0.0001       | 83.62        | 0.54                       | 41.66         | 1.40                        | 43.59      | 3.86                     |
+| 0.001       | 83.45        | 1.23                       | 42.32         | 2.13                        | 49.03      | 6.44                     |
+| 0.01        | 84.18        | 1.51                       | 44.26         | 4.48                        | 41.22      | 10.62                    |
+| 0.1         | 82.75        | 5.36                       | 12.89         | 17.36                        | 23.62      | 32.32                    |
 
 | Activation Function | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
-|--------------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| ReLU             | 82.84        | 3.87                       | 0.36          | 0.15                        | 0.41       | 0.21                     |
-| Sigmoid         | 83.23        | 3.59                       | 0.34          | 0.17                        | 0.40       | 0.22                     |
-| Softplus        | 84.25        | 1.45                       | 0.38          | 0.15                        | 0.39       | 0.17                     |
-| Tanh            | 83.67        | 1.67                       | 0.33          | 0.17                        | 0.38       | 0.20                     |
+|---------------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| ReLU               | 82.84        | 3.87                       | 36.04         | 14.98                        | 41.02      | 20.83                    |
+| Sigmoid            | 83.23        | 3.59                       | 33.51         | 17.02                        | 40.00      | 21.86                    |
+| Softplus           | 84.25        | 1.45                       | 38.19         | 15.33                        | 38.51      | 17.18                    |
+| Tanh               | 83.67        | 1.67                       | 33.39         | 16.70                        | 37.92      | 19.68                    |
 
 | Batch Size | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
 |------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| 32         | 84.46        | 1.55                       | 0.33          | 0.20                        | 0.32       | 0.21                     |
-| 64         | 84.09        | 1.62                       | 0.34          | 0.17                        | 0.37       | 0.19                     |
-| 128        | 82.00        | 4.75                       | 0.38          | 0.12                        | 0.47       | 0.19                     |
-| 256        | 83.44        | 1.62                       | 0.36          | 0.14                        | 0.41       | 0.17                     |
+| 32         | 84.46        | 1.55                       | 32.59         | 19.71                        | 32.48      | 21.42                    |
+| 64         | 84.09        | 1.62                       | 34.43         | 17.23                        | 37.06      | 18.89                    |
+| 128        | 82.00        | 4.75                       | 38.28         | 11.84                        | 47.06      | 19.29                    |
+| 256        | 83.44        | 1.62                       | 35.82         | 14.19                        | 40.85      | 17.06                    |
 
-Looking already at the exact statistics, the network achieves the best results with a learning rate of 0.01, a softplus activation function and a batch size of 32. With a small learning rate, the results are similar regardless of the other parameters, while for a rate of 0.1, the other parameters already have a strong influence on the results.
+- the best accuracy and precision are achieved with a learning rate of 0.01
+- bigger difference is in the recall where the lowest score is euqal 23.62% (learning rate = 0.1) and the highest is 49.03% (learning rate = 0.001)
+- when it comes to activation functions, Softplus performs best in terms of accuracy and precision, while Relu functions achieve the highest recall
+- scores for batch size are similar in comparison to the rest parameters
+- for batch size euqal 32 accuracy is the best, but precision and recall the worst
+- for batch size euqal 128 precision and recall are the best, but accuracy the worst
 
 
 ### :small_blue_diamond: with 2 hidden layers
@@ -162,26 +172,34 @@ class NeuralNetwork3layers(nn.Module):
 
 | Learning Rate | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
 |--------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| 1e-04       | 83.39        | 0.91                       | 0.42          | 0.02                        | 0.47       | 0.04                     |
-| 0.001       | 83.64        | 0.88                       | 0.43          | 0.02                        | 0.48       | 0.05                     |
-| 0.01        | 83.94        | 1.81                       | 0.40          | 0.11                        | 0.39       | 0.18                     |
-| 0.1         | 84.48        | 3.60                       | 0.07          | 0.14                        | 0.12       | 0.27                     |
+| 0.0001       | 83.39        | 0.91                       | 41.70         | 1.85                        | 47.14      | 3.95                     |
+| 0.001       | 83.64        | 0.88                       | 42.62         | 2.01                        | 48.24      | 5.21                     |
+| 0.01        | 83.94        | 1.81                       | 39.66         | 11.47                        | 39.07      | 17.80                    |
+| 0.1         | 84.48        | 3.60                       | 6.50          | 14.02                        | 12.38      | 26.78                    |
 
 | Activation Function | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
-|--------------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| ReLU             | 83.11        | 2.72                       | 0.36          | 0.15                        | 0.42       | 0.19                     |
-| Sigmoid         | 84.14        | 1.54                       | 0.32          | 0.19                        | 0.36       | 0.22                     |
-| Softplus        | 84.32        | 2.07                       | 0.35          | 0.18                        | 0.36       | 0.20                     |
-| Tanh            | 83.87        | 1.90                       | 0.27          | 0.19                        | 0.33       | 0.26                     |
+|---------------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| ReLU               | 83.11        | 2.72                       | 36.04         | 14.61                        | 42.38      | 19.03                    |
+| Sigmoid            | 84.14        | 1.54                       | 31.64         | 18.96                        | 35.75      | 21.79                    |
+| Softplus           | 84.32        | 2.07                       | 35.46         | 17.87                        | 36.20      | 19.83                    |
+| Tanh               | 83.87        | 1.90                       | 27.34         | 19.15                        | 32.52      | 26.21                    |
 
 | Batch Size | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
 |------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| 32         | 84.40        | 1.86                       | 0.30          | 0.21                        | 0.31       | 0.23                     |
-| 64         | 84.53        | 1.25                       | 0.32          | 0.19                        | 0.32       | 0.22                     |
-| 128        | 83.34        | 2.72                       | 0.33          | 0.17                        | 0.40       | 0.21                     |
-| 256        | 83.17        | 2.14                       | 0.36          | 0.14                        | 0.43       | 0.19                     |
+| 32         | 84.40        | 1.86                       | 29.63         | 20.89                        | 31.38      | 23.44                    |
+| 64         | 84.53        | 1.25                       | 31.54         | 19.02                        | 31.68      | 22.44                    |
+| 128        | 83.34        | 2.72                       | 33.39         | 16.85                        | 40.36      | 21.18                    |
+| 256        | 83.17        | 2.14                       | 35.92         | 14.35                        | 43.43      | 18.71                    |
 
-As before, networks with a learning rate of 0.1 have a high deviation for the test data and, of all the activation functions, the ReLU function performs worst for the test set.
+- when the learning rate is set to 0.1, the accuracy is the best, but the precision and recall are the worst (only 6.5% and 12.38%, respectively).
+- the best value for learning rate is 0.001, because:
+    - accuarcy is only slightly worst than the others, but it have the lowest standard deviation
+    - recall and precision are the best
+- in case of activation function I think ReLU and Softplus are better, because:
+    - they have definitely beter precision and recall
+    - slightly wors accuracy in comparison to the others activation function.
+- for larger batch sizes, precision and recall are better; however, for accuracy, the opposite is true
+
 
 ### :small_blue_diamond: with 3 hidden layers
 
@@ -206,28 +224,31 @@ class NeuralNetwork4layers(nn.Module):
 
 | Learning Rate | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
 |--------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| 1e-04       | 83.28        | 1.15                       | 0.42          | 0.02                        | 0.48       | 0.06                     |
-| 0.001       | 83.20        | 1.49                       | 0.42          | 0.02                        | 0.50       | 0.06                     |
-| 0.01        | 84.19        | 1.61                       | 0.37          | 0.15                        | 0.36       | 0.20                     |
-| 0.1         | 81.41        | 18.00                      | 0.03          | 0.11                        | 0.09       | 0.27                     |
+| 0.0001       | 83.28        | 1.15                       | 41.74         | 2.13                        | 48.22      | 5.68                     |
+| 0.001       | 83.20        | 1.49                       | 41.91         | 2.46                        | 50.14      | 6.34                     |
+| 0.01        | 84.19        | 1.61                       | 36.99         | 15.13                        | 36.09      | 19.77                    |
+| 0.1         | 81.41        | 18.00                      | 3.49          | 10.81                        | 8.93       | 26.54                    |
 
 | Activation Function | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
-|--------------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| ReLU             | 79.95        | 17.64                      | 0.36          | 0.16                        | 0.42       | 0.23                     |
-| Sigmoid         | 84.02        | 1.37                       | 0.31          | 0.19                        | 0.36       | 0.22                     |
-| Softplus        | 84.14        | 1.54                       | 0.32          | 0.19                        | 0.36       | 0.22                     |
-| Tanh            | 83.97        | 2.37                       | 0.25          | 0.20                        | 0.30       | 0.27                     |
+|---------------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
+| ReLU               | 79.95        | 17.64                      | 36.32         | 16.25                        | 41.58      | 22.58                    |
+| Sigmoid            | 84.02        | 1.37                       | 31.27         | 18.69                        | 36.34      | 22.00                    |
+| Softplus           | 84.14        | 1.54                       | 31.80         | 19.10                        | 35.91      | 22.26                    |
+| Tanh               | 83.97        | 2.37                       | 24.73         | 20.02                        | 29.55      | 27.47                    |
 
 | Batch Size | Mean Accuracy | Standard Deviation Accuracy | Mean Precision | Standard Deviation Precision | Mean Recall | Standard Deviation Recall |
 |------------|--------------|----------------------------|---------------|-----------------------------|------------|--------------------------|
-| 32         | 84.62        | 1.46                       | 0.30          | 0.21                        | 0.30       | 0.22                     |
-| 64         | 79.44        | 17.58                      | 0.29          | 0.19                        | 0.40       | 0.28                     |
-| 128        | 84.11        | 1.59                       | 0.34          | 0.17                        | 0.36       | 0.22                     |
-| 256        | 83.91        | 1.55                       | 0.31          | 0.19                        | 0.37       | 0.23                     |
+| 32         | 84.62        | 1.46                       | 29.91         | 21.06                        | 30.24      | 22.35                    |
+| 64         | 79.44        | 17.58                      | 29.33         | 18.87                        | 40.38      | 27.76                    |
+| 128        | 84.11        | 1.59                       | 33.66         | 17.05                        | 35.57      | 22.05                    |
+| 256        | 83.91        | 1.55                       | 31.22         | 18.70                        | 37.19      | 22.53                    |
 
-
-The example of a network with three layers shows even better the conclusions observed
-in the previous examples.
+- for learning rate = 0.1 there is a significant variation in accuracy, with the lowest levels of precision and recall (only 3.49% and 8.93%, respectively)
+- in comparison to the previous models, the mean recall is the highest (50%) for a learning rate of 0.001
+- the standard deviation for accuracy is also very high for the ReLu activation function, but the mean precision and recall are the best
+- Sigmoid and Softplus activation functions have similar results
+- when it comes to batch size, there's one example (batch size = 64) where the standard deviation for accuracy is high, but the recall is the best
+- rest values of the batch size have similar scores
 
 ## :small_blue_diamond: Conclusions
 
@@ -240,10 +261,13 @@ in the previous examples.
 | **Mean recall (training)**          | 38 | 40 | 38 | 36 |
 | **Mean recall (test)**             | 33 | 39 | 37 | 36 |
 
-The number of layers does not have a large impact on the accuracy of the network, in each case the accuracy is around 83% - 84%.In the case of precision and sensitivity, better results are achieved by networks
-with fewer hidden layers.
-In summary, the learning rate and the activation function have the greatest influence on the results, but in most cases the accuracy is around 83% with precision
-and sensitivity varying between 30% and 40%.
+The number of layers does not have a large impact on the accuracy of the network, in each case the accuracy is around 83% - 84%.
+In the case of precision and sensitivity, better results are achieved by networks with fewer hidden layers.
+In most cases the Softplus and ReLu functions were the best.
+Learning rate euqal 0.1 gave scores with high variance.
+In summary, the learning rate and the activation function have the greatest influence on the results, 
+but in most cases the accuracy is around 83% with precision and sensitivity varying between 30% and 40%.
+
 
 
 
